@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using REALvisionApiLib.Models;
 using System;
@@ -89,7 +89,7 @@ namespace
             }
             if(progress == 1)
             {
-                var result = MakeRequest("POST", "DownloadFile?taskid=" + TaskId, new ApiRequest(), true, filePath).Result;
+                var result = MakeRequest("GET", "DownloadFile?taskid=" + TaskId, new ApiRequest(), true, filePath).Result;
             } else if ( progress == -1)
             {
                 Console.WriteLine("Slicing file failed ... ");
@@ -368,7 +368,11 @@ namespace
                         //Turn the ApiRequest into an UploadApiRequest
                         string tempString = JsonConvert.SerializeObject(ApiRequest);
                         //We use the string for the HTTP request 
-                        result = client.PostAsync(this.ApiSettings.ApiUrl + serviceCall, new StringContent(tempString, Encoding.UTF8, "application/json")).Result;
+                        if(method == "GET"){
+                            result = client.GetAsync(this.ApiSettings.ApiUrl + serviceCall).Result;
+                        } else {
+                            result = client.PostAsync(this.ApiSettings.ApiUrl + serviceCall, new StringContent(tempString, Encoding.UTF8, "application/json")).Result;
+                        }
 
                         if (result.IsSuccessStatusCode)
                         {
