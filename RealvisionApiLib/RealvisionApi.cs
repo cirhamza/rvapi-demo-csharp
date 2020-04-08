@@ -21,8 +21,8 @@ namespace
         public string DownloadsFolder { get; set; } //The folder where the downloaded files will be stored 
         public string AssetsFolder { get; set; }    //The folder where the files to slice are stored.
         public ApiSettings ApiSettings { get; set; } 
-        public string Token { get; set; }
-        public string TokenExpiresOn { get; set; }
+        // public string Token { get; set; }
+        // public string TokenExpiresOn { get; set; }
 
         //The Slicing Configs
         public int CheckProgressInterval { get; set; } //The interval of time in which you check the progress of the slicing task (every 2 seconds for an example)
@@ -35,7 +35,7 @@ namespace
             this.RootFolder = rootFolder;
             this.DownloadsFolder = downloadsFolder;
             this.ApiSettings = this.getApiSettings(RootFolder);
-            this.getToken(RootFolder).Wait();
+            // this.getToken(RootFolder).Wait();
             this.CheckProgressInterval = 2;
         }
 
@@ -308,7 +308,7 @@ namespace
 
                     //Authentication & Authorization
                     client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", this.ApiSettings.ApiKey);
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", this.Token);
+                    // client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", this.Token);
                     
                     HttpResponseMessage result = new HttpResponseMessage();
 
